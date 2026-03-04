@@ -2188,3 +2188,12 @@ button:hover {
   opacity: 0;
   visibility: hidden;
 }
+.bench-couple{
+position:absolute;
+bottom:0;
+left:50%;
+transform:translateX(-50%);
+width:420px;
+z-index:2;
+pointer-events:none;
+}
