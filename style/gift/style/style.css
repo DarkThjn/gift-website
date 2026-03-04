@@ -2188,24 +2188,3 @@ button:hover {
   opacity: 0;
   visibility: hidden;
 }
-.bench-couple{
-position:absolute;
-bottom:0;
-left:50%;
-transform:translateX(-50%);
-width:420px;
-z-index:2;
-pointer-events:none;
-}
-.bench-couple{
-opacity:0;
-animation:benchAppear 3s ease forwards;
-animation-delay:4s;
-}
-
-@keyframes benchAppear{
-to{
-opacity:1;
-transform:translateX(-50%) translateY(-10px);
-}
-}
