@@ -2,27 +2,27 @@ const a0_0x4cd241 = a0_0x3643; (function (_0x284332, _0x1c36e3) { const _0x5027a
 songs.push(
     {
         title: "Deja Vu",
-        cover: "style/sound/Anh (6).jpg",
+        cover: "style/sound/Anh (7).jpg",
         src: "style/sound/song1.mp3"
     },
     {
         title: "Nghenhacanhmoikhibuon",
-        cover: "style/sound/Anh (7).jpg",
+        cover: "style/sound/Anh (8).jpg",
         src: "style/sound/song2.mp3"
     },
     {
         title: "Không thử sao biết?",
-        cover: "style/sound/Anh (8).jpg",
+        cover: "style/sound/Anh (9).jpg",
         src: "style/sound/song3.mp3"
     },
     {
         title: "MƯA GIỮA BÀI",
-        cover: "style/sound/Anh (9).jpg",
+        cover: "style/sound/Anh (10).jpg",
         src: "style/sound/song4.mp3"
     },
     {
         title: "love.",
-        cover: "style/sound/Anh (10).jpg",
+        cover: "style/sound/Anh (11).jpg",
         src: "style/sound/song5.mp3"
     }
 );
