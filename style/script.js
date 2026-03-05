@@ -34,12 +34,18 @@ songs.push(
 
 document.addEventListener("DOMContentLoaded", () => {
     try {
-        // --- VÁ LỖI 1: ÉP GALLERY KHÔNG ĐƯỢC LAZY LOAD TRÊN IOS ---
+        // --- VÁ LỖI 1: ÉP GALLERY KHÔNG ĐƯỢC LAZY LOAD & ÉP CHẠY ANIMATION TRÊN SAFARI ---
         window.populateGallery = function() {
             if (!galleryTop || !galleryBottom) return;
             
             galleryTop.innerHTML = '';
             galleryBottom.innerHTML = '';
+            
+            // Ép Container sử dụng GPU (Hardware Acceleration)
+            galleryTop.style.transform = 'translate3d(0, 0, 0)';
+            galleryTop.style.WebkitTransform = 'translate3d(0, 0, 0)';
+            galleryBottom.style.transform = 'translate3d(0, 0, 0)';
+            galleryBottom.style.WebkitTransform = 'translate3d(0, 0, 0)';
             
             const topImages = imageFiles.slice(0, 9);
             const bottomImages = imageFiles.slice(9);
@@ -48,8 +54,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 const img = document.createElement('img');
                 img.src = src;
                 img.loading = 'eager'; 
-                img.style.transform = 'translateZ(0)'; 
-                img.style.willChange = 'transform';
+                // Bỏ transform ở thẻ img đi vì đã áp dụng cho container
                 
                 img.addEventListener('click', (e) => {
                     e.preventDefault();
@@ -60,11 +65,26 @@ document.addEventListener("DOMContentLoaded", () => {
             
             [...topImages, ...topImages].forEach(src => galleryTop.appendChild(createImg(src)));
             [...bottomImages, ...bottomImages].forEach(src => galleryBottom.appendChild(createImg(src)));
+
+            // ⚠️ THỦ THUẬT QUAN TRỌNG NHẤT DÀNH CHO SAFARI ⚠️
+            // Ép trình duyệt phải tính toán lại kích thước (Force Reflow) 
+            // Điều này bắt Safari nhận diện các ảnh vừa thêm trước khi chạy Animation
+            void galleryTop.offsetWidth;
+            void galleryBottom.offsetWidth;
+
+            // Chốt hạ: Ép Animation phải chạy, đè lên mọi trạng thái lỗi của Safari
+            galleryTop.style.animationPlayState = 'running';
+            galleryTop.style.WebkitAnimationPlayState = 'running';
+            galleryBottom.style.animationPlayState = 'running';
+            galleryBottom.style.WebkitAnimationPlayState = 'running';
         };
 
+        // 👇 ĐÂY LÀ ĐOẠN BẠN VÔ TÌNH XÓA MẤT (Tôi đã thêm lại) 👇
         if (typeof imageFiles !== 'undefined' && imageFiles.length > 0) {
-            populateGallery();
+            populateGallery(); // Gọi hàm để thực sự nhét ảnh vào màn hình
         }
+        // 👆 =================================================== 👆
+
 
         // --- VÁ LỖI 2: XỬ LÝ IFRAME GIFT KHÔNG BỊ NHÁY HÌNH ---
         if (typeof btnGift !== 'undefined' && btnGift) {
