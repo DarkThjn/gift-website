@@ -28,11 +28,9 @@ body {
   0% {
     background-position: 0% 50%;
   }
-
   50% {
     background-position: 100% 50%;
   }
-
   100% {
     background-position: 0% 50%;
   }
@@ -73,7 +71,6 @@ p {
     padding-top: 2rem;
     padding-bottom: 2rem;
   }
-
   .menu-item {
     padding: 1rem 1rem;
     font-size: 1rem;
@@ -81,7 +78,6 @@ p {
     animation: none !important;
     transform: none !important;
   }
-
   .menu-item .icon img {
     width: 40px;
     height: 40px;
@@ -140,12 +136,10 @@ p {
 }
 
 @keyframes float {
-
   0%,
   100% {
     transform: translateY(0);
   }
-
   50% {
     transform: translateY(-20px);
   }
@@ -178,6 +172,7 @@ body::before {
   pointer-events: none;
   z-index: -1;
   animation: flyUp linear forwards;
+  will-change: transform, opacity; /* Tối ưu GPU cho tim bay */
 }
 
 @keyframes flyUp {
@@ -185,7 +180,6 @@ body::before {
     transform: translateY(0) rotate(0deg);
     opacity: 1;
   }
-
   100% {
     transform: translateY(-110vh) rotate(360deg);
     opacity: 0;
@@ -336,7 +330,6 @@ body::before {
   .letter-modal {
     padding: 30px 20px;
   }
-
   .letter-body {
     font-size: 1.2rem;
   }
@@ -642,6 +635,7 @@ body::before {
   display: flex;
   width: max-content;
   pointer-events: auto;
+  will-change: transform; /* Tối ưu GPU cho dãy ảnh trượt */
 }
 
 .gallery-row img {
@@ -664,30 +658,31 @@ body::before {
 
 .row-top {
   animation: scroll-left 30s linear infinite;
+  -webkit-animation: scroll-left 30s linear infinite; /* Thêm cho Safari */
 }
 
 .row-bottom {
   animation: scroll-right 30s linear infinite;
+  -webkit-animation: scroll-right 30s linear infinite; /* Thêm cho Safari */
 }
 
+/* Thêm Keyframes Webkit cho Safari */
+@-webkit-keyframes scroll-left {
+  0% { -webkit-transform: translateX(0); }
+  100% { -webkit-transform: translateX(-50%); }
+}
 @keyframes scroll-left {
-  0% {
-    transform: translateX(0);
-  }
-
-  100% {
-    transform: translateX(-50%);
-  }
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
 }
 
+@-webkit-keyframes scroll-right {
+  0% { -webkit-transform: translateX(-50%); }
+  100% { -webkit-transform: translateX(0); }
+}
 @keyframes scroll-right {
-  0% {
-    transform: translateX(-50%);
-  }
-
-  100% {
-    transform: translateX(0);
-  }
+  0% { transform: translateX(-50%); }
+  100% { transform: translateX(0); }
 }
 
 .lightbox-content {
@@ -711,34 +706,27 @@ body::before {
   .image-modal {
     height: 500px;
   }
-
   .gallery-row img {
     height: 140px;
     width: 110px;
   }
-
   .gallery-gif-wrapper.top {
     top: 5px;
     left: 5px;
   }
-
   .gallery-gif-wrapper.bottom {
     bottom: 5px;
     right: 5px;
   }
-
   .gallery-gif {
     width: 40px !important;
   }
-
   .gallery-gif-wrapper.bottom .gallery-gif {
     width: 100px !important;
   }
-
   .gallery-gif-wrapper.top .gallery-gif {
     width: 100px !important;
   }
-
   .flying-text {
     font-size: 0.8rem !important;
   }
@@ -788,50 +776,38 @@ body::before {
 
 .text-right {
   animation: run-right 8s linear infinite;
+  -webkit-animation: run-right 8s linear infinite;
 }
 
 .text-left {
   animation: run-left 8s linear infinite;
+  -webkit-animation: run-left 8s linear infinite;
 }
 
+@-webkit-keyframes run-right {
+  0% { -webkit-transform: translateX(-100%); opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { -webkit-transform: translateX(100%); opacity: 0; }
+}
 @keyframes run-right {
-  0% {
-    transform: translateX(-100%);
-    opacity: 0;
-  }
-
-  10% {
-    opacity: 1;
-  }
-
-  90% {
-    opacity: 1;
-  }
-
-  100% {
-    transform: translateX(100%);
-    opacity: 0;
-  }
+  0% { transform: translateX(-100%); opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { transform: translateX(100%); opacity: 0; }
 }
 
+@-webkit-keyframes run-left {
+  0% { -webkit-transform: translateX(100%); opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { -webkit-transform: translateX(-100%); opacity: 0; }
+}
 @keyframes run-left {
-  0% {
-    transform: translateX(100%);
-    opacity: 0;
-  }
-
-  10% {
-    opacity: 1;
-  }
-
-  90% {
-    opacity: 1;
-  }
-
-  100% {
-    transform: translateX(-100%);
-    opacity: 0;
-  }
+  0% { transform: translateX(100%); opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { transform: translateX(-100%); opacity: 0; }
 }
 
 .gift-modal {
@@ -1003,28 +979,12 @@ body::before {
 }
 
 @keyframes heartbeat {
-  0% {
-    transform: scale(1);
-  }
-
-  15% {
-    transform: scale(1.15);
-  }
-
-  30% {
-    transform: scale(1);
-  }
-
-  45% {
-    transform: scale(1.15);
-  }
-
-  60% {
-    transform: scale(1);
-  }
+  0% { transform: scale(1); }
+  15% { transform: scale(1.15); }
+  30% { transform: scale(1); }
+  45% { transform: scale(1.15); }
+  60% { transform: scale(1); }
 }
-
-
 
 .pass-dots {
   display: flex;
@@ -1068,6 +1028,7 @@ body::before {
   align-items: center;
   justify-content: center;
   backdrop-filter: blur(5px);
+  -webkit-tap-highlight-color: transparent; /* Xóa bóng xám khi click trên iOS */
 }
 
 .num-btn:hover {
@@ -1103,38 +1064,28 @@ body::before {
 }
 
 @keyframes shake {
-
   10%,
-  90% {
-    transform: translate3d(-1px, 0, 0);
-  }
-
+  90% { transform: translate3d(-1px, 0, 0); }
   20%,
-  80% {
-    transform: translate3d(2px, 0, 0);
-  }
-
+  80% { transform: translate3d(2px, 0, 0); }
   30%,
   50%,
-  70% {
-    transform: translate3d(-4px, 0, 0);
-  }
-
+  70% { transform: translate3d(-4px, 0, 0); }
   40%,
-  60% {
-    transform: translate3d(4px, 0, 0);
-  }
+  60% { transform: translate3d(4px, 0, 0); }
 }
 
 .main-content-hidden {
   filter: blur(20px);
   opacity: 0.3;
   transition: all 1s ease;
+  pointer-events: none; /* Khóa tương tác khi bị làm mờ (ngăn ghost click) */
 }
 
 .main-content-visible {
   filter: blur(0);
   opacity: 1;
+  pointer-events: auto; /* Mở lại tương tác khi đã vào được trong */
 }
 
 @keyframes fadeIn {
@@ -1142,7 +1093,6 @@ body::before {
     opacity: 0;
     transform: translateY(20px);
   }
-
   to {
     opacity: 1;
     transform: translateY(0);
@@ -1154,46 +1104,35 @@ body::before {
     flex-direction: column;
     padding: 20px 15px;
     max-width: 320px;
-    /* Nhỏ hơn cho điện thoại */
     gap: 15px;
     border-radius: 30px;
   }
-
   .lock-image {
     max-width: 140px;
-    /* Ảnh nhỏ hơn */
   }
-
   .lock-image img {
     border-width: 3px;
   }
-
   .lock-icon {
     font-size: 2rem;
     margin-bottom: 10px;
   }
-
   .pass-dots {
     margin-bottom: 25px;
     gap: 10px;
   }
-
   .dot {
     width: 12px;
     height: 12px;
   }
-
   .num-btn {
     width: 55px;
-    /* Nút bấm nhỏ lại */
     height: 55px;
     font-size: 1.2rem;
   }
-
   .numpad {
     gap: 12px;
   }
-
   .reset-lock-btn {
     bottom: 15px;
     right: 15px;
@@ -1223,11 +1162,10 @@ body::before {
   transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   z-index: 100;
   display: none;
-  /* Ẩn mặc định */
 }
 
 /* Hiển thị nút khi đã mở khóa */
-.main-content-visible~.reset-lock-btn {
+.main-content-visible ~ .reset-lock-btn {
   display: flex;
 }
 
