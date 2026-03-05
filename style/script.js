@@ -86,27 +86,34 @@ document.addEventListener("DOMContentLoaded", () => {
         // 👆 =================================================== 👆
 
 
-        // --- VÁ LỖI 2: XỬ LÝ IFRAME GIFT KHÔNG BỊ NHÁY HÌNH ---
+       // --- VÁ LỖI 2: XỬ LÝ IFRAME GIFT (HIDE & RELOAD TỪ CACHE) ---
         if (typeof btnGift !== 'undefined' && btnGift) {
             const newBtnGift = btnGift.cloneNode(true);
             btnGift.parentNode.replaceChild(newBtnGift, btnGift);
             
+            // Cài đặt hiệu ứng mờ dần (fade) cho iframe để mượt mắt
+            if (typeof giftIframe !== 'undefined' && giftIframe) {
+                giftIframe.style.transition = 'opacity 0.2s ease';
+            }
+            
             newBtnGift.addEventListener('click', () => {
                 if (typeof giftIframe !== 'undefined' && giftIframe) {
-                    let realSrc = giftIframe.getAttribute('data-src');
-                    if (realSrc) {
-                        giftIframe.src = 'about:blank'; 
-                        setTimeout(() => {
-                            giftIframe.src = realSrc; 
-                        }, 50);
-                    }
+                    // 1. Giấu iframe đi ngay lập tức (che cái khung hình đã chạy xong)
+                    giftIframe.style.opacity = '0';
+                    
+                    setTimeout(() => {
+                        // 2. Cài đặt cờ: Khi nào iframe tải xong mới cho hiện lên lại
+                        giftIframe.onload = function() {
+                            giftIframe.style.opacity = '1';
+                            giftIframe.onload = null; // Xóa cờ để tránh rác bộ nhớ
+                        };
+                        
+                        // 3. Ép tải lại (Lúc này lấy từ bộ nhớ đệm Cache nên mất chưa tới 0.1s)
+                        giftIframe.src = giftIframe.src; 
+                    }, 50);
                 }
                 if (typeof giftOverlay !== 'undefined') {
                     giftOverlay.classList.add('active');
                 }
             });
         }
-    } catch (error) {
-        console.warn("Lỗi monkey patch nhưng đã được cô lập:", error);
-    }
-});
