@@ -79,14 +79,13 @@ document.addEventListener("DOMContentLoaded", () => {
             galleryBottom.style.WebkitAnimationPlayState = 'running';
         };
 
-        // 👇 ĐÂY LÀ ĐOẠN BẠN VÔ TÌNH XÓA MẤT (Tôi đã thêm lại) 👇
+        // 👇 Gọi hàm để thực sự nhét ảnh vào màn hình
         if (typeof imageFiles !== 'undefined' && imageFiles.length > 0) {
-            populateGallery(); // Gọi hàm để thực sự nhét ảnh vào màn hình
+            populateGallery(); 
         }
-        // 👆 =================================================== 👆
 
 
-       // --- VÁ LỖI 2: XỬ LÝ IFRAME GIFT (HIDE & RELOAD TỪ CACHE) ---
+        // --- VÁ LỖI 2: XỬ LÝ IFRAME GIFT (HIDE & RELOAD TỪ CACHE) ---
         if (typeof btnGift !== 'undefined' && btnGift) {
             const newBtnGift = btnGift.cloneNode(true);
             btnGift.parentNode.replaceChild(newBtnGift, btnGift);
@@ -117,3 +116,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
             });
         }
+    // 👇 PHẦN NÀY LÀ PHẦN BẠN COPY THIẾU LÚC NÃY ĐÂY 👇
+    } catch (error) {
+        console.warn("Lỗi monkey patch nhưng đã được cô lập:", error);
+    }
+});
